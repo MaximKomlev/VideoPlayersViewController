@@ -72,7 +72,6 @@ class PlayerWidgetViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
-    
 }
 
 // MARK: PlayerWidgetViewControllerProtocol
@@ -88,39 +87,6 @@ extension PlayerWidgetViewController: PlayerWidgetViewControllerProtocol {
     }
 }
 
-// MARK: SourceViewPlayerViewControllerTransitioningProtocol
-
-extension PlayerWidgetViewController: SourceViewPlayerViewControllerTransitioningProtocol {
-    func transitionFinished(controllerTransitioning: BaseViewControllerTransitioning, wasCancelled: Bool) {
-        guard !wasCancelled, !controllerTransitioning.isFullScreenDirection else {
-            playerViewController.isFullScreen = true
-            return
-        }
-        
-        if let vc = fullScreenViewController?.removePlayerViewController() {
-            movePlayerViewController(vc)
-        }
-    }
-}
-
-// MARK: PlayerFullScreenViewControllerDelegate
-
-extension PlayerWidgetViewController: PlayerFullScreenViewControllerDelegate {
-    func fullScreenChanged(isFullScreen: Bool) {
-        if isFullScreen {
-            guard !fullScreenViewController.isPresented else {
-                return
-            }
-            present(fullScreenViewController, animated: true)
-        } else {
-            fullScreenViewController?.dismiss(animated: true)
-        }
-}
-
-// MARK: UIViewControllerTransitioningDelegate
-
-extension PlayerWidgetViewController: UIViewControllerTransitioningDelegate {
-    func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
 // MARK: PlayerViewControllerTransitioningProtocol
 
 extension PlayerWidgetViewController: PlayerViewControllerTransitioningControllerProtocol {
