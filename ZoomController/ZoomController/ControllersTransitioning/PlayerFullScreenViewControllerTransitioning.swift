@@ -1,5 +1,5 @@
 //
-//  FullScreenViewControllerTransitioning.swift
+//  PlayerFullScreenViewControllerTransitioning.swift
 //  ZoomController
 //
 //  Created by Maxim Komlev on 4/30/20.
@@ -9,23 +9,16 @@
 import UIKit
 import Foundation
 
-protocol SourceViewPlayerViewControllerTransitioningProtocol: UIViewController {
-    var sourceRect: CGRect { get }
-    
-    func transitionFinished(controllerTransitioning: BaseViewControllerTransitioning, wasCancelled: Bool)
-}
-
 class BaseViewControllerTransitioning: NSObject {
     
     // MARK: Fields
     
-    let transitioningSourceViewController: SourceViewPlayerViewControllerTransitioningProtocol!
-    let tutorialAnimatedTransitionDuration: TimeInterval = ThemeManager.shared.currentTheme.animationDuration04
+    let transitioningCoordinator: PlayerViewControllerTransitioningCoordinatorProtocol!
 
     // MARK: Initializers/Deinitializer
     
-    required init(source: SourceViewPlayerViewControllerTransitioningProtocol) {
-        transitioningSourceViewController = source
+    required init(coordinator: PlayerViewControllerTransitioningCoordinatorProtocol) {
+        transitioningCoordinator = coordinator
 
         super.init()
     }
@@ -39,7 +32,7 @@ class BaseViewControllerTransitioning: NSObject {
     }
 }
 
-class FullScreenViewControllerTransitioning: BaseViewControllerTransitioning, UIViewControllerAnimatedTransitioning {
+class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioning, UIViewControllerAnimatedTransitioning {
     
     override var isFullScreenDirection: Bool {
         return true
@@ -48,7 +41,7 @@ class FullScreenViewControllerTransitioning: BaseViewControllerTransitioning, UI
     // MARK: UIViewControllerAnimatedTransitioning
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return tutorialAnimatedTransitionDuration
+        return ThemeManager.shared.currentTheme.animationDuration04
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -70,9 +63,9 @@ class FullScreenViewControllerTransitioning: BaseViewControllerTransitioning, UI
             fullScreenView.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: 0),
             fullScreenView.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: 0)
         ])
-        containerView.center = viewController.view.convert(transitioningSourceViewController.sourceRect.origin,
-                                                           from: transitioningSourceViewController.view)
-        containerView.bounds.size = transitioningSourceViewController.sourceRect.size
+        containerView.center = viewController.view.convert(transitioningCoordinator.initialViewRect().origin,
+                                                           from: transitioningCoordinator.initialView())
+        containerView.bounds.size = transitioningCoordinator.initialViewRect().size
 
         UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeCubic, .layoutSubviews], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {

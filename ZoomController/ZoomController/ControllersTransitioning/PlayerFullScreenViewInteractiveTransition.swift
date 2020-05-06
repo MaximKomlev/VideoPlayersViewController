@@ -1,5 +1,5 @@
 //
-//  FullScreenViewPercentDrivenInteractiveTransition.swift
+//  PlayerFullScreenViewInteractiveTransition.swift
 //  ZoomController
 //
 //  Created by Maxim Komlev on 5/3/20.
@@ -9,30 +9,32 @@
 import UIKit
 import Foundation
 
-protocol FullScreenViewPercentDrivenInteractiveTransitionDelegate: UIViewController {
+protocol PlayerFullScreenViewInteractiveTransitionDelegate: class {
     func dismiss()
 }
 
-class FullScreenViewPercentDrivenInteractiveTransition: UIPercentDrivenInteractiveTransition {
+class PlayerFullScreenViewInteractiveTransition: UIPercentDrivenInteractiveTransition {
 
     // MARK: Fields
     
-    private weak var interactiveTransitionDelegate: FullScreenViewPercentDrivenInteractiveTransitionDelegate?
+    private var playerFullScreenViewController: PlayerViewControllerTransitioningControllerProtocol!
     private let panGestureRecognizer = UIPanGestureRecognizer()
 
     // MARK: Initializer/Deinitializer
 
-    init(interactiveTransitionDelegate: FullScreenViewPercentDrivenInteractiveTransitionDelegate) {
+    init(playerFullScreenViewController: PlayerViewControllerTransitioningControllerProtocol) {
         super.init()
         
-        self.interactiveTransitionDelegate = interactiveTransitionDelegate
-        self.interactiveTransitionDelegate?.view.isUserInteractionEnabled = true
+        self.playerFullScreenViewController = playerFullScreenViewController
+        self.playerFullScreenViewController?.view.isUserInteractionEnabled = true
 
         self.panGestureRecognizer.addTarget(self, action: #selector(panHandler))
-        self.interactiveTransitionDelegate?.view.addGestureRecognizer(panGestureRecognizer)
+        self.playerFullScreenViewController?.view.addGestureRecognizer(panGestureRecognizer)
     }
     
     // MARK: Properties
+    
+    weak var interactiveTransitionDelegate: PlayerFullScreenViewInteractiveTransitionDelegate?
     
     var isRunning = false
     

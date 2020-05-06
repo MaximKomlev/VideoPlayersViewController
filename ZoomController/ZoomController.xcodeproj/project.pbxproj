@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BC0F624E24623CF200D427A3 /* PlayerFullScreenCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0F624D24623CF200D427A3 /* PlayerFullScreenCoordinator.swift */; };
-		BC48219F245BD97C00A06EDB /* FullScreenViewControllerTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48219E245BD97C00A06EDB /* FullScreenViewControllerTransitioning.swift */; };
+		BC0F624E24623CF200D427A3 /* PlayerViewControllerTransitioningCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0F624D24623CF200D427A3 /* PlayerViewControllerTransitioningCoordinator.swift */; };
+		BC48219F245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48219E245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift */; };
 		BC4821AA245D4AD600A06EDB /* PlayerWidgetViewControllerTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4821A9245D4AD600A06EDB /* PlayerWidgetViewControllerTransitioning.swift */; };
-		BC4821AC245FDD1400A06EDB /* FullScreenViewPercentDrivenInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4821AB245FDD1400A06EDB /* FullScreenViewPercentDrivenInteractiveTransition.swift */; };
+		BC4821AC245FDD1400A06EDB /* PlayerFullScreenViewInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4821AB245FDD1400A06EDB /* PlayerFullScreenViewInteractiveTransition.swift */; };
 		BC519A0124539E38004CE13D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC519A0024539E38004CE13D /* AppDelegate.swift */; };
 		BC519A0324539E38004CE13D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC519A0224539E38004CE13D /* SceneDelegate.swift */; };
 		BC519A0524539E38004CE13D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC519A0424539E38004CE13D /* ViewController.swift */; };
@@ -51,10 +51,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		BC0F624D24623CF200D427A3 /* PlayerFullScreenCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFullScreenCoordinator.swift; sourceTree = "<group>"; };
-		BC48219E245BD97C00A06EDB /* FullScreenViewControllerTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenViewControllerTransitioning.swift; sourceTree = "<group>"; };
+		BC0F624D24623CF200D427A3 /* PlayerViewControllerTransitioningCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewControllerTransitioningCoordinator.swift; sourceTree = "<group>"; };
+		BC48219E245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFullScreenViewControllerTransitioning.swift; sourceTree = "<group>"; };
 		BC4821A9245D4AD600A06EDB /* PlayerWidgetViewControllerTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerWidgetViewControllerTransitioning.swift; sourceTree = "<group>"; };
-		BC4821AB245FDD1400A06EDB /* FullScreenViewPercentDrivenInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenViewPercentDrivenInteractiveTransition.swift; sourceTree = "<group>"; };
+		BC4821AB245FDD1400A06EDB /* PlayerFullScreenViewInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFullScreenViewInteractiveTransition.swift; sourceTree = "<group>"; };
 		BC5199FD24539E38004CE13D /* ZoomController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ZoomController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC519A0024539E38004CE13D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BC519A0224539E38004CE13D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -119,7 +119,7 @@
 		BC0F624C24623C4800D427A3 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				BC0F624D24623CF200D427A3 /* PlayerFullScreenCoordinator.swift */,
+				BC0F624D24623CF200D427A3 /* PlayerViewControllerTransitioningCoordinator.swift */,
 			);
 			path = Coordinators;
 			sourceTree = "<group>";
@@ -127,9 +127,9 @@
 		BC48219D245BD95300A06EDB /* ControllersTransitioning */ = {
 			isa = PBXGroup;
 			children = (
-				BC48219E245BD97C00A06EDB /* FullScreenViewControllerTransitioning.swift */,
+				BC48219E245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift */,
 				BC4821A9245D4AD600A06EDB /* PlayerWidgetViewControllerTransitioning.swift */,
-				BC4821AB245FDD1400A06EDB /* FullScreenViewPercentDrivenInteractiveTransition.swift */,
+				BC4821AB245FDD1400A06EDB /* PlayerFullScreenViewInteractiveTransition.swift */,
 			);
 			path = ControllersTransitioning;
 			sourceTree = "<group>";
@@ -361,9 +361,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC519A2A2453B237004CE13D /* ViewControllerLayout.swift in Sources */,
-				BC48219F245BD97C00A06EDB /* FullScreenViewControllerTransitioning.swift in Sources */,
+				BC48219F245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift in Sources */,
 				BC519A262453A323004CE13D /* ZoomModel.swift in Sources */,
-				BC0F624E24623CF200D427A3 /* PlayerFullScreenCoordinator.swift in Sources */,
+				BC0F624E24623CF200D427A3 /* PlayerViewControllerTransitioningCoordinator.swift in Sources */,
 				BC54C3FB2459434F00CBE5DD /* Lock.swift in Sources */,
 				BC54C3F92459423700CBE5DD /* WeakObject.swift in Sources */,
 				BC519A282453A323004CE13D /* ZoomViewController.swift in Sources */,
@@ -384,7 +384,7 @@
 				BC54C3F224593E9800CBE5DD /* PlayerControlsViewController.swift in Sources */,
 				BC4821AA245D4AD600A06EDB /* PlayerWidgetViewControllerTransitioning.swift in Sources */,
 				BC54C3FE2459445400CBE5DD /* Theme.swift in Sources */,
-				BC4821AC245FDD1400A06EDB /* FullScreenViewPercentDrivenInteractiveTransition.swift in Sources */,
+				BC4821AC245FDD1400A06EDB /* PlayerFullScreenViewInteractiveTransition.swift in Sources */,
 				BC519A0324539E38004CE13D /* SceneDelegate.swift in Sources */,
 				BC519A272453A323004CE13D /* ZoomTrackerView.swift in Sources */,
 			);

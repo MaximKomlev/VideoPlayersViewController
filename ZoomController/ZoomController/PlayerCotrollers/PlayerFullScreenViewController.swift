@@ -9,21 +9,14 @@
 import UIKit
 import Foundation
 
-protocol PlayerFullScreenViewControllerDelegate: class {
-    func fullScreenChanged(isFullScreen: Bool)
-}
-
-protocol PlayerFullScreenViewControllerProtocol: UIViewController, PlayerViewControllerTransitioningProtocol {
-    var interactiveTransitionController: FullScreenViewPercentDrivenInteractiveTransition? { get }
-    
-    var isPresented: Bool { get }
+protocol PlayerFullScreenViewControllerProtocol: PlayerViewControllerTransitioningControllerProtocol {
 }
 
 class PlayerFullScreenViewController: UIViewController, PlayerFullScreenViewControllerProtocol {
     
     // MARK: Fields
   
-    private var playerViewController: PlayerViewControllerProtocol?
+    private unowned var playerViewController: PlayerViewControllerProtocol?
     private var originalBackGroundColor: UIColor? = .clear
     
     // MARK: Initializer/Deinitializer
@@ -36,7 +29,6 @@ class PlayerFullScreenViewController: UIViewController, PlayerFullScreenViewCont
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         
         modalPresentationStyle = .custom
-        interactiveTransitionController = FullScreenViewPercentDrivenInteractiveTransition(interactiveTransitionDelegate: self)
     }
 
     required init?(coder: NSCoder) {
@@ -64,16 +56,17 @@ class PlayerFullScreenViewController: UIViewController, PlayerFullScreenViewCont
         return .top
     }
     
-    // MARK: PlayerFullScreenViewControllerProtocol
-    
-    var interactiveTransitionController: FullScreenViewPercentDrivenInteractiveTransition?
-    
-    var isPresented: Bool {
-        return playerViewController != nil
-    }
 }
 
-extension PlayerFullScreenViewController: PlayerViewControllerTransitioningProtocol {
+extension PlayerFullScreenViewController: PlayerViewControllerTransitioningControllerProtocol {
+    func isPresented() -> Bool {
+        return playerViewController != nil
+    }
+
+    func playerViewRect() -> CGRect {
+        return playerViewController?.view.frame ?? CGRect.zero
+    }
+
     func removePlayerViewController() -> PlayerViewControllerProtocol? {
         guard let viewController = playerViewController else {
             return nil
@@ -118,8 +111,3 @@ extension PlayerFullScreenViewController: PlayerViewControllerTransitioningProto
     
 }
 
-extension PlayerFullScreenViewController: FullScreenViewPercentDrivenInteractiveTransitionDelegate {
-    func dismiss() {
-        playerViewController?.isFullScreen = false
-    }
-}

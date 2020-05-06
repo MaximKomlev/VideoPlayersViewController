@@ -14,7 +14,7 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
     // MARK: UIViewControllerAnimatedTransitioning
     
     func transitionDuration(using transitionContext: UIViewControllerContextTransitioning?) -> TimeInterval {
-        return tutorialAnimatedTransitionDuration
+        return ThemeManager.shared.currentTheme.animationDuration04
     }
     
     func animateTransition(using transitionContext: UIViewControllerContextTransitioning) {
@@ -27,10 +27,15 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
         let duration = transitionDuration(using: transitionContext)
         let containerView = transitionContext.containerView
         containerView.backgroundColor = fullScreenView.backgroundColor
+        containerView.layer.cornerRadius = ThemeManager.shared.currentTheme.cornerRadius
+        containerView.layer.borderColor = UIColor.lightGray.cgColor
+        containerView.layer.borderWidth = 0
+        containerView.layer.masksToBounds = true
+
         
         let sourceRect = CGRect(origin: containerView.center, size: containerView.bounds.size)
-        let destinationRect = viewController.view.convert(transitioningSourceViewController.sourceRect,
-                                                          from: transitioningSourceViewController.view)
+        let destinationRect = viewController.view.convert(transitioningCoordinator.initialViewRect(),
+                                                          from: transitioningCoordinator.initialView())
 
         UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeCubic, .layoutSubviews], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
@@ -59,7 +64,7 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
                 containerView.layoutIfNeeded()
             }
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-            self.transitioningSourceViewController.transitionFinished(controllerTransitioning: self,
+            self.transitioningCoordinator.transitionFinished(controllerTransitioning: self,
                                                                       wasCancelled: transitionContext.transitionWasCancelled)
         }
     }

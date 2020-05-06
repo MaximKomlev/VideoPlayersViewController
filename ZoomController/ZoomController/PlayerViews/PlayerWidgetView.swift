@@ -170,10 +170,6 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
         layer.borderColor = UIColor.lightGray.cgColor
         layer.borderWidth = 0
         layer.masksToBounds = true
-        layer.shadowColor = UIColor.black.withAlphaComponent(0.4).cgColor
-        layer.shadowOpacity = 0
-        layer.shadowRadius = 0
-        layer.shadowOffset = CGSize(width: 0, height: 0)
     }
     
     private func makeLayoutConstraints() {

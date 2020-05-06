@@ -22,25 +22,26 @@ class PlayerWidgetViewController: UIViewController {
     private let widgetView = PlayerWidgetView()
     private var playerViewController: PlayerViewControllerProtocol!
     private var fullScreenViewController: PlayerFullScreenViewControllerProtocol!
+    private var transitioningCoordinator: PlayerViewControllerTransitioningCoordinatorProtocol!
     
     // MARK: Initializer/Deinitializer
     
     required convenience init(model: VideoItem) {
         self.init(nibName: nil, bundle: nil)
-        
-        providesPresentationContextTransitionStyle = true
-        
+                
         widgetView.videoContentSize = model.resolution
         widgetView.captionAttributedText = NSAttributedString(string: model.title ?? "")
         widgetView.descriptionAttributedText = NSAttributedString(string: model.description ?? "")
         widgetView.isBorder = true
         
         playerViewController = PlayerViewController()
-        playerViewController.fullScreenDelegate = self
         playerViewController.videoUrl = model.videoUrl ?? ""
         
         fullScreenViewController = PlayerFullScreenViewController()
-        fullScreenViewController.transitioningDelegate = self
+        
+        transitioningCoordinator = PlayerViewControllerTransitioningCoordinator(playerViewController: playerViewController,
+                                                                                widgetViewController: self,
+                                                                                fullScreenViewController: fullScreenViewController)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -70,16 +71,6 @@ class PlayerWidgetViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-    }
-    
-    var isFullScreen: Bool {
-        return fullScreenViewController != nil
-    }
-    
-    // MARK: SourceViewPlayerViewControllerTransitioningProtocol
-    
-    var sourceRect: CGRect {
-        return widgetView.videoContentRect
     }
     
 }
@@ -124,39 +115,23 @@ extension PlayerWidgetViewController: PlayerFullScreenViewControllerDelegate {
         } else {
             fullScreenViewController?.dismiss(animated: true)
         }
-    }
 }
 
 // MARK: UIViewControllerTransitioningDelegate
 
 extension PlayerWidgetViewController: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
-        if let vc = removePlayerViewController() {
-            fullScreenViewController?.movePlayerViewController(vc)
-        }
-        
-        return FullScreenViewControllerTransitioning(source: self)
-    }
-
-    func animationController(forDismissed dismissed: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-        return PlayerWidgetViewControllerTransitioning(source: self)
-    }
-    
-    func interactionControllerForDismissal(using animator: UIViewControllerAnimatedTransitioning)
-        -> UIViewControllerInteractiveTransitioning? {
-        guard let interactiveTransitionController = fullScreenViewController?.interactiveTransitionController,
-            interactiveTransitionController.isRunning else {
-                return nil
-        }
-        return interactiveTransitionController
-    }
-
-}
-
 // MARK: PlayerViewControllerTransitioningProtocol
 
-extension PlayerWidgetViewController: PlayerViewControllerTransitioningProtocol {
+extension PlayerWidgetViewController: PlayerViewControllerTransitioningControllerProtocol {
+    func isPresented() -> Bool {
+        return !fullScreenViewController.isPresented()
+    }
+
+    func playerViewRect() -> CGRect {
+        return widgetView.videoContentRect
+    }
+    
     func removePlayerViewController() -> PlayerViewControllerProtocol? {
         guard let viewController = playerViewController else {
             return nil

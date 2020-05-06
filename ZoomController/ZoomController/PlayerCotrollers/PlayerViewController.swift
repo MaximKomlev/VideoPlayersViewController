@@ -21,18 +21,13 @@ struct PlaybackInfo {
 }
 
 protocol PlayerViewControllerProtocol: UIViewController {
-    var fullScreenDelegate: PlayerFullScreenViewControllerDelegate? { get set }
+    var transitioningCoordinatorDelegate: PlayerViewControllerTransitioningCoordinatorDelegate? { get set }
 
     var videoUrl: String { get set }
     var isPlaying: Bool { get set }
     var isFullScreen: Bool { get set }
 
     func seek(to time: Double, completionHandler: @escaping (Bool) -> Void)
-}
-
-protocol PlayerViewControllerTransitioningProtocol: class {
-    func removePlayerViewController() -> PlayerViewControllerProtocol?
-    func movePlayerViewController(_ viewController: PlayerViewControllerProtocol)
 }
 
 protocol PlayerViewControllerDelegate: PlayerViewControllerProtocol {
@@ -124,7 +119,7 @@ class PlayerViewController: UIViewController, PlayerViewControllerProtocol {
 
     var isFullScreen: Bool = false {
         didSet {
-            fullScreenDelegate?.fullScreenChanged(isFullScreen: isFullScreen)
+            transitioningCoordinatorDelegate?.fullScreenChanged(isFullScreen: isFullScreen)
             playerControlsViewController.isFullScreen = isFullScreen
         }
     }
@@ -152,7 +147,7 @@ class PlayerViewController: UIViewController, PlayerViewControllerProtocol {
         }
     }
     
-    weak var fullScreenDelegate: PlayerFullScreenViewControllerDelegate?
+    weak var transitioningCoordinatorDelegate: PlayerViewControllerTransitioningCoordinatorDelegate?
     
     func seek(to time: Double, completionHandler: @escaping (Bool) -> Void) {
         playerView.seek(to: time) { (result) in
