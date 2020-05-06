@@ -21,7 +21,7 @@ class PlayerWidgetViewController: UIViewController {
     
     private let widgetView = PlayerWidgetView()
     private var playerViewController: PlayerViewControllerProtocol!
-    private var fullScreenViewController: PlayerFullScreenViewControllerProtocol?
+    private var fullScreenViewController: PlayerFullScreenViewControllerProtocol!
     
     // MARK: Initializer/Deinitializer
     
@@ -38,6 +38,9 @@ class PlayerWidgetViewController: UIViewController {
         playerViewController = PlayerViewController()
         playerViewController.fullScreenDelegate = self
         playerViewController.videoUrl = model.videoUrl ?? ""
+        
+        fullScreenViewController = PlayerFullScreenViewController()
+        fullScreenViewController.transitioningDelegate = self
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -106,7 +109,6 @@ extension PlayerWidgetViewController: SourceViewPlayerViewControllerTransitionin
         if let vc = fullScreenViewController?.removePlayerViewController() {
             movePlayerViewController(vc)
         }
-        fullScreenViewController = nil
     }
 }
 
@@ -115,12 +117,10 @@ extension PlayerWidgetViewController: SourceViewPlayerViewControllerTransitionin
 extension PlayerWidgetViewController: PlayerFullScreenViewControllerDelegate {
     func fullScreenChanged(isFullScreen: Bool) {
         if isFullScreen {
-            guard !self.isFullScreen else {
+            guard !fullScreenViewController.isPresented else {
                 return
             }
-            fullScreenViewController = PlayerFullScreenViewController()
-            fullScreenViewController?.transitioningDelegate = self
-            present(fullScreenViewController!, animated: true)
+            present(fullScreenViewController, animated: true)
         } else {
             fullScreenViewController?.dismiss(animated: true)
         }

@@ -15,6 +15,8 @@ protocol PlayerFullScreenViewControllerDelegate: class {
 
 protocol PlayerFullScreenViewControllerProtocol: UIViewController, PlayerViewControllerTransitioningProtocol {
     var interactiveTransitionController: FullScreenViewPercentDrivenInteractiveTransition? { get }
+    
+    var isPresented: Bool { get }
 }
 
 class PlayerFullScreenViewController: UIViewController, PlayerFullScreenViewControllerProtocol {
@@ -65,7 +67,10 @@ class PlayerFullScreenViewController: UIViewController, PlayerFullScreenViewCont
     // MARK: PlayerFullScreenViewControllerProtocol
     
     var interactiveTransitionController: FullScreenViewPercentDrivenInteractiveTransition?
-
+    
+    var isPresented: Bool {
+        return playerViewController != nil
+    }
 }
 
 extension PlayerFullScreenViewController: PlayerViewControllerTransitioningProtocol {
