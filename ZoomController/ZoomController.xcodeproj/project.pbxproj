@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		BC0F624E24623CF200D427A3 /* PlayerViewControllerTransitioningCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC0F624D24623CF200D427A3 /* PlayerViewControllerTransitioningCoordinator.swift */; };
+		BC0F62552463B28000D427A3 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BC0F62532463B27F00D427A3 /* README.md */; };
+		BC0F62562463B28000D427A3 /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = BC0F62542463B27F00D427A3 /* LICENSE */; };
 		BC48219F245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC48219E245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift */; };
 		BC4821AA245D4AD600A06EDB /* PlayerWidgetViewControllerTransitioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4821A9245D4AD600A06EDB /* PlayerWidgetViewControllerTransitioning.swift */; };
 		BC4821AC245FDD1400A06EDB /* PlayerFullScreenViewInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC4821AB245FDD1400A06EDB /* PlayerFullScreenViewInteractiveTransition.swift */; };
@@ -52,6 +54,8 @@
 
 /* Begin PBXFileReference section */
 		BC0F624D24623CF200D427A3 /* PlayerViewControllerTransitioningCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewControllerTransitioningCoordinator.swift; sourceTree = "<group>"; };
+		BC0F62532463B27F00D427A3 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../../README.md; sourceTree = "<group>"; };
+		BC0F62542463B27F00D427A3 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../../../LICENSE; sourceTree = "<group>"; };
 		BC48219E245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFullScreenViewControllerTransitioning.swift; sourceTree = "<group>"; };
 		BC4821A9245D4AD600A06EDB /* PlayerWidgetViewControllerTransitioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerWidgetViewControllerTransitioning.swift; sourceTree = "<group>"; };
 		BC4821AB245FDD1400A06EDB /* PlayerFullScreenViewInteractiveTransition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerFullScreenViewInteractiveTransition.swift; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 		BC54C3D42457E9F000CBE5DD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BC0F62542463B27F00D427A3 /* LICENSE */,
+				BC0F62532463B27F00D427A3 /* README.md */,
 				BC519A0624539E38004CE13D /* Main.storyboard */,
 				BC519A0924539E3B004CE13D /* Assets.xcassets */,
 				BC519A0B24539E3B004CE13D /* LaunchScreen.storyboard */,
@@ -342,7 +348,9 @@
 			files = (
 				BC519A0D24539E3B004CE13D /* LaunchScreen.storyboard in Resources */,
 				BC519A0A24539E3B004CE13D /* Assets.xcassets in Resources */,
+				BC0F62552463B28000D427A3 /* README.md in Resources */,
 				BC519A0824539E38004CE13D /* Main.storyboard in Resources */,
+				BC0F62562463B28000D427A3 /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
