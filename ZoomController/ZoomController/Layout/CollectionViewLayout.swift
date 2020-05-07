@@ -24,7 +24,7 @@ protocol CollectionViewLayoutProtocol: class {
     init(layoutDelegate: CollectionViewLayoutDelegate)
     
     func performLayout(_ size: CGSize)
-    func itemFrame(for index: Int) -> CGRect
+    func itemRect(for index: Int) -> CGRect
 }
 
 class CollectionViewLayout: CollectionViewLayoutProtocol {
@@ -193,7 +193,7 @@ class CollectionViewLayout: CollectionViewLayoutProtocol {
         }
     }
     
-    func itemFrame(for index: Int) -> CGRect {
+    func itemRect(for index: Int) -> CGRect {
         if index >= 0 && index < itemsRect.count {
             return itemsRect[index]
         }

@@ -167,7 +167,7 @@ class ViewController: UIViewController {
 
         for i in 0..<contentView.subviews.count {
             let subview = contentView.subviews[i]
-            let rect = layout.itemFrame(for: i)
+            let rect = layout.itemRect(for: i)
             subview.bounds.size = rect.size
             subview.center = rect.origin
         }
