@@ -32,7 +32,6 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
         containerView.layer.borderWidth = 0
         containerView.layer.masksToBounds = true
 
-        
         let sourceRect = CGRect(origin: containerView.center, size: containerView.bounds.size)
         let destinationRect = viewController.view.convert(transitioningCoordinator.initialViewRect(),
                                                           from: transitioningCoordinator.initialView())
@@ -43,10 +42,8 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
                 containerView.center = destinationRect.origin
                 containerView.layoutIfNeeded()
             }
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
-                containerView.backgroundColor = .clear
-            }
         }) { (_) in
+            containerView.layer.cornerRadius = 0
             if !transitionContext.transitionWasCancelled {
                 fullScreenView.removeFromSuperview()
             } else {

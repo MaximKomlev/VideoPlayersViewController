@@ -87,7 +87,7 @@ class ViewController: UIViewController {
     // MARK: Fields
     
     private let viewModel = ViewModel()
-    private var layout: ViewControllerLayout!
+    private var layout: CollectionViewLayout!
     
     private let contentView = UIScrollView()
     
@@ -110,7 +110,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        layout = ViewControllerLayout(layoutDelegate: self)
+        layout = CollectionViewLayout(layoutDelegate: self)
         layout.boundaryMargin = ThemeManager.shared.currentTheme.contentMargin
         layout.itemSpace = ThemeManager.shared.currentTheme.contentItemSpace
                 
@@ -174,7 +174,7 @@ class ViewController: UIViewController {
     }
 }
 
-extension ViewController: ViewControllerLayoutDelegate {
+extension ViewController: CollectionViewLayoutDelegate {
     var itemsCount: Int {
         return viewModel.itemsCount
     }

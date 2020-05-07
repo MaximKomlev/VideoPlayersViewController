@@ -21,7 +21,7 @@
 		BC519A262453A323004CE13D /* ZoomModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC519A232453A323004CE13D /* ZoomModel.swift */; };
 		BC519A272453A323004CE13D /* ZoomTrackerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC519A242453A323004CE13D /* ZoomTrackerView.swift */; };
 		BC519A282453A323004CE13D /* ZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC519A252453A323004CE13D /* ZoomViewController.swift */; };
-		BC519A2A2453B237004CE13D /* ViewControllerLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC519A292453B237004CE13D /* ViewControllerLayout.swift */; };
+		BC519A2A2453B237004CE13D /* CollectionViewLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC519A292453B237004CE13D /* CollectionViewLayout.swift */; };
 		BC519A2D24556B0B004CE13D /* PlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC519A2C24556B0B004CE13D /* PlayerView.swift */; };
 		BC54C3D62457F26C00CBE5DD /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC54C3D52457F26C00CBE5DD /* PlayerViewController.swift */; };
 		BC54C3DB2458044100CBE5DD /* PlayerWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC54C3DA2458044100CBE5DD /* PlayerWidgetView.swift */; };
@@ -69,7 +69,7 @@
 		BC519A232453A323004CE13D /* ZoomModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomModel.swift; sourceTree = "<group>"; };
 		BC519A242453A323004CE13D /* ZoomTrackerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomTrackerView.swift; sourceTree = "<group>"; };
 		BC519A252453A323004CE13D /* ZoomViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomViewController.swift; sourceTree = "<group>"; };
-		BC519A292453B237004CE13D /* ViewControllerLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewControllerLayout.swift; sourceTree = "<group>"; };
+		BC519A292453B237004CE13D /* CollectionViewLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewLayout.swift; sourceTree = "<group>"; };
 		BC519A2C24556B0B004CE13D /* PlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerView.swift; sourceTree = "<group>"; };
 		BC54C3D52457F26C00CBE5DD /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		BC54C3DA2458044100CBE5DD /* PlayerWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerWidgetView.swift; sourceTree = "<group>"; };
@@ -124,14 +124,14 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		BC48219D245BD95300A06EDB /* ControllersTransitioning */ = {
+		BC48219D245BD95300A06EDB /* ControllerTransitionings */ = {
 			isa = PBXGroup;
 			children = (
 				BC48219E245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift */,
 				BC4821A9245D4AD600A06EDB /* PlayerWidgetViewControllerTransitioning.swift */,
 				BC4821AB245FDD1400A06EDB /* PlayerFullScreenViewInteractiveTransition.swift */,
 			);
-			path = ControllersTransitioning;
+			path = ControllerTransitionings;
 			sourceTree = "<group>";
 		};
 		BC5199F424539E38004CE13D = {
@@ -156,7 +156,7 @@
 			isa = PBXGroup;
 			children = (
 				BC0F624C24623C4800D427A3 /* Coordinators */,
-				BC48219D245BD95300A06EDB /* ControllersTransitioning */,
+				BC48219D245BD95300A06EDB /* ControllerTransitionings */,
 				BCC478DE245B887F002A0ADF /* Utils */,
 				BCC478DB245B6B48002A0ADF /* Layout */,
 				BC54C3FC2459441700CBE5DD /* Theme */,
@@ -169,10 +169,6 @@
 				BC519A0024539E38004CE13D /* AppDelegate.swift */,
 				BC519A0224539E38004CE13D /* SceneDelegate.swift */,
 				BC519A0424539E38004CE13D /* ViewController.swift */,
-				BC519A0624539E38004CE13D /* Main.storyboard */,
-				BC519A0924539E3B004CE13D /* Assets.xcassets */,
-				BC519A0B24539E3B004CE13D /* LaunchScreen.storyboard */,
-				BC519A0E24539E3B004CE13D /* Info.plist */,
 			);
 			path = ZoomController;
 			sourceTree = "<group>";
@@ -210,6 +206,10 @@
 		BC54C3D42457E9F000CBE5DD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				BC519A0624539E38004CE13D /* Main.storyboard */,
+				BC519A0924539E3B004CE13D /* Assets.xcassets */,
+				BC519A0B24539E3B004CE13D /* LaunchScreen.storyboard */,
+				BC519A0E24539E3B004CE13D /* Info.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -244,7 +244,7 @@
 		BCC478DB245B6B48002A0ADF /* Layout */ = {
 			isa = PBXGroup;
 			children = (
-				BC519A292453B237004CE13D /* ViewControllerLayout.swift */,
+				BC519A292453B237004CE13D /* CollectionViewLayout.swift */,
 			);
 			path = Layout;
 			sourceTree = "<group>";
@@ -360,7 +360,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BC519A2A2453B237004CE13D /* ViewControllerLayout.swift in Sources */,
+				BC519A2A2453B237004CE13D /* CollectionViewLayout.swift in Sources */,
 				BC48219F245BD97C00A06EDB /* PlayerFullScreenViewControllerTransitioning.swift in Sources */,
 				BC519A262453A323004CE13D /* ZoomModel.swift in Sources */,
 				BC0F624E24623CF200D427A3 /* PlayerViewControllerTransitioningCoordinator.swift in Sources */,
@@ -548,7 +548,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AGXB6543AL;
-				INFOPLIST_FILE = ZoomController/Info.plist;
+				INFOPLIST_FILE = ZoomController/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -566,7 +566,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = AGXB6543AL;
-				INFOPLIST_FILE = ZoomController/Info.plist;
+				INFOPLIST_FILE = ZoomController/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

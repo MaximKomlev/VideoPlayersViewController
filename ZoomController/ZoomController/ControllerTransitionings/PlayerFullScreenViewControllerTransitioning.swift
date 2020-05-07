@@ -53,8 +53,13 @@ class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioni
 
         let duration = transitionDuration(using: transitionContext)
         let containerView = transitionContext.containerView
-        containerView.backgroundColor = .clear
+        containerView.backgroundColor = fullScreenView.backgroundColor
         containerView.clipsToBounds = true
+        containerView.layer.cornerRadius = ThemeManager.shared.currentTheme.cornerRadius
+        containerView.layer.borderColor = UIColor.lightGray.cgColor
+        containerView.layer.borderWidth = 0
+        containerView.layer.masksToBounds = true
+
         containerView.addSubview(fullScreenView)
         fullScreenView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -73,10 +78,8 @@ class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioni
                 containerView.center = fullScreenView.window?.center ?? CGPoint(x: UIScreen.main.bounds.width / 2,
                                                                                 y: UIScreen.main.bounds.height / 2)
             }
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
-                containerView.backgroundColor = fullScreenView.backgroundColor
-            }
         }) { (success) in
+            containerView.layer.cornerRadius = 0
             transitionContext.completeTransition(true)
         }
 

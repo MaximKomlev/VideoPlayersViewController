@@ -143,7 +143,7 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
     
     private func initializeUI() {
         contentView.contentMode = .scaleAspectFit
-        contentView.backgroundColor = .lightGray
+        contentView.backgroundColor = .black
         contentView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(contentView)
 

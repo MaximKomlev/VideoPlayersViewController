@@ -1,5 +1,5 @@
 //
-//  ViewControllerLayout.swift
+//  CollectionViewLayout.swift
 //  ZoomController
 //
 //  Created by Maxim Komlev on 4/24/20.
@@ -9,38 +9,38 @@
 import UIKit
 import Foundation
 
-protocol ViewControllerLayoutDelegate: class {
+protocol CollectionViewLayoutDelegate: class {
     var itemsCount: Int { get }
     
     func itemSize(index: Int, widthConstrained: CGFloat) -> CGSize
 }
 
-protocol ViewControllerLayoutProtocol: class {
+protocol CollectionViewLayoutProtocol: class {
     var itemSpace: CGFloat { get set }
     var boundaryMargin: CGFloat { get set }
    
     var contentSize: CGSize { get }
     
-    init(layoutDelegate: ViewControllerLayoutDelegate)
+    init(layoutDelegate: CollectionViewLayoutDelegate)
     
     func performLayout(_ size: CGSize)
     func itemFrame(for index: Int) -> CGRect
 }
 
-class ViewControllerLayout: ViewControllerLayoutProtocol {
+class CollectionViewLayout: CollectionViewLayoutProtocol {
     
     // MARK: Fields
     
-    private weak var layoutDelegate: ViewControllerLayoutDelegate?
+    private weak var layoutDelegate: CollectionViewLayoutDelegate?
     private var itemsRect = [CGRect]()
 
     // MARK: Initializers/Deinitializer
     
-    required init(layoutDelegate: ViewControllerLayoutDelegate) {
+    required init(layoutDelegate: CollectionViewLayoutDelegate) {
         self.layoutDelegate = layoutDelegate
     }
     
-    // MARK: ViewControllerLayoutProtocol
+    // MARK: CollectionViewLayoutProtocol
     
     var itemSpace: CGFloat = 0
     var boundaryMargin: CGFloat = 0
