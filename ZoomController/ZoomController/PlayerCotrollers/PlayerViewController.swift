@@ -51,6 +51,8 @@ class PlayerViewController: UIViewController, PlayerViewControllerProtocol {
     private var zoomViewController: ZoomViewControllerProtocol!
     private var playerControlsViewController: PlayerControlsViewControllerProtocol!
 
+    private var zoomModel: ZoomModel!
+
     private let tapGestureRecogniser = UITapGestureRecognizer()
     
     private var timer: Timer? = nil
@@ -80,6 +82,7 @@ class PlayerViewController: UIViewController, PlayerViewControllerProtocol {
         var zoomConfig = ZoomViewControllerConfig()
         zoomConfig.maxZoom = 16
         zoomViewController = ZoomViewController(delegate: self, zoomConfig: zoomConfig)
+        zoomModel = ZoomModel(delegate: self)
 
         playerView.delegate = self
         playerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
@@ -195,6 +198,18 @@ extension PlayerViewController: ZoomViewControllerDelegate {
     }
     
     func stopPlayerRectChang(source: ZoomViewControllerProtocol) {
+        zoomModel.sendZoomInfoAfterDelay(zoomInfo: source.zoomInfo())
+    }
+}
+
+// MARK: ZoomModelDelegate
+
+extension PlayerViewController: ZoomModelDelegate {
+    func didSendFrame(source: ZoomModelProtocol) {
+    }
+    
+    func didReceiveFrame(source: ZoomModelProtocol, zoomInfo: ZoomInfo) {
+        zoomViewController.updatePlayerView(zoomInfo: zoomInfo)
     }
 }
 

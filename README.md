@@ -1,11 +1,11 @@
 # UIView zooming/transitioning and custom layouting
 Demo of UIView full-screen transitioning / zooming, and custom layouting of UIViews list.
 
-In this project I would cover some architecture challenges/problems developer facing when designing application to manage collection of video players to play as recordings such to play real time streaming utilizing native player or custom one.
+In this project I would cover some architecture challenges/problems developer facing when designing application to manage collection of video players to play as recordings, such to play real time streaming utilizing native player or custom one.
 
 I do not introduce bicycle here, it is mostly like a helpful tips for them who are going implement zooming/scaling video playback, implement custom transitioning to/from full-screen, and manage multiple playbacks at the same time.
 
-First, from what I would like to start, it is debt how to represent list of playbacks.
+First, from what I would like to start, it is dept how to represent list of playbacks.
 It depends on, 
 if it is just application like a youtube or library of recordings, probably you will not want to allow playing simultaneously a few players, since it is not common user experience for such cases. Then probably you will need one, maximum two players a time. And what actually you need to show for user it is list of recordings with thumbnails each of them. And general ***UIViewCollection*** works well here.
 
@@ -51,16 +51,29 @@ protocol CollectionViewLayoutDelegate: class {
 ```
 i.e. pretty much similar what ***UICollectionViewFlowLayout*** does.
 
-Next topic which I would like to cover here is zooming/scaling and dragging of video view. I would like to talk about challenges like, proportionally scaling of player widget view, when  bounds size is changing (e.g. on screen rotation from portrait to landscape), keeping right position of selected area when re-bounds happened, adding cropped video stream into picture so it could be looking like picture in picture.
+Next topic which I would like to cover here is *zooming/scaling* and *dragging* of video view. I would like to talk about challenges like, *proportionally scaling* of player widget view, when  bounds size is changing (e.g. on screen rotation from portrait to landscape), *keeping right position of selected area* when re-bounds happened, adding cropped video stream into picture so it could be looking like picture in picture.
 So first what I would recommend do not use frame properties of view since it is undefined on transformation, instead of use center, bounds and transform properties, all of them give the information child position and size relatively to parent, then a lot of examples recommends to use center property of view when dragging, I would recommend to use translate of transform property to keep matrix transformation up to date, since probably you will not just moving also scaling and probably rotate and it will help simply update transformation by multiplying another transformation matrix and resetting to initial state whole transformation when it is needed.
-If you take a look at ***ZoomViewController*** then method  ***viewDidResize(_ size: CGSize)*** gives an information how to rebounds content view and properly scale children to get finally something what contentmode property of UIImageView does when it is set to ***scaleAspectFit*** and at the same time keep the position of children if they were scaled/dragged inside of content view. Handlers pinchHandler and panhandler give an idea how to properly transform children views and keep them in bounds of content view.
+If you take a look at ***ZoomViewController*** then method  ***viewDidResize(_ size: CGSize)*** gives an information how to rebounds content view and properly scale children to get finally something what ***contentMode*** property of ***UIImageView*** does when it is set to ***scaleAspectFit*** and at the same time keep the position of children if they were *scaled/dragged* inside of content view. Handlers pinchHandler and panhandler give an idea how to properly transform children views and keep them in bounds of content view.
 
 Advanced topic, it is how to represents cropped picture inside of the full frame picture. 
 Let’s assume, you have a full frame image, and now you could get cropped image of some area of full framed pictures with the same resolution, it is clear that it will looks like a zoom, I.e. the cropped picture will be more clear and detailed, now assume you can get frame of the new image relatively to fullframed picture (it is possible and depends how you took the image). And now it would be cool to place the cropped image inside of fullframed in exact place. Actually it is easily if original image is not transformed, but a bit tricky when it is. 
 In ***ZoomViewController*** you can find method which get crop of selected area, It is ***zoomInfo()*** the method calculate frame of the selected area of the transformed view and frame of the destination area from where picture will be taken relatively to resolution of the destination. And ***ZoomModel*** class is responsible to send frame to destination, take new frame and calculate frame to apply cropped picture inside of fullframed. 
 To see how it works I added snapshots.
 
-***will add screenshots soon***
+***Full framed image***
+<p align="center">
+<img src="./screenshots/fullframed_picture.jpeg" width="812"/>
+</p>
+
+***Zoomed image***
+<p align="center">
+<img src="./screenshots/zoomed_area.jpeg" width="812"/>
+</p>
+
+***Zoomed image insixe of full framed image***
+<p align="center">
+<img src="./screenshots/zoomed_picture_in_fullframed.jpeg" width="812"/>
+</p>
 
 And last topic which I would cover here is transition from widget view to fullscreen view and back to exact in the same place from where it was fullscreened.
 Here is nothing complicated and UIKit framework provide whole set of classes to do that, just a few tips.

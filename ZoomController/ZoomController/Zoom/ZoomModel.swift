@@ -188,7 +188,7 @@ class ZoomModel: ZoomModelProtocol {
         let playerTransform = zoomInfo.playerTransform
         var playerTranslation = playerTransform.translationPoint
 
-        // current scale, since it could be changed during validating outgoing frame
+        // current scale, since it could be changed during validation of outgoing frame
         let playerScale = CGPoint(x: rect.width / sourceResolution.width,
                               y: rect.height / sourceResolution.height)
         
