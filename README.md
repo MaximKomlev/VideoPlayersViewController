@@ -5,7 +5,7 @@ In this project I would cover some architecture challenges/problems developer fa
 
 I do not introduce bicycle here, it is mostly like a helpful tips for them who are going implement zooming/scaling video playback, implement custom transitioning to/from full-screen, and manage multiple playbacks at the same time.
 
-First, from what I would like to start, it is dept how to represent list of playbacks.
+First, from what I would like to start, it is debate how to represent list of playbacks.
 It depends on, 
 if it is just application like a youtube or library of recordings, probably you will not want to allow playing simultaneously a few players, since it is not common user experience for such cases. Then probably you will need one, maximum two players a time. And what actually you need to show for user it is list of recordings with thumbnails each of them. And general ***UIViewCollection*** works well here.
 
