@@ -156,9 +156,9 @@ class PlayerControlsViewController: UIViewController,
             bottomConstraint
         ])
         
-        let footerBottomMargin = isFullScreen ?
-            view.window?.safeAreaInsets.bottom ?? CGFloat(20) :
-            ThemeManager.shared.currentTheme.itemInsets
+        let footerBottomMargin = ThemeManager.shared.currentTheme.itemInsets +
+            (isFullScreen ? view.window?.safeAreaInsets.bottom ?? CGFloat(20) : 0)
+            
         let footerHeight = footerView.size.height
         layoutConstraints.append(contentsOf: [
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
