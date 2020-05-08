@@ -122,7 +122,7 @@ class PlayerViewController: UIViewController, PlayerViewControllerProtocol {
 
     var isFullScreen: Bool = false {
         didSet {
-            transitioningCoordinatorDelegate?.fullScreenChanged(isFullScreen: isFullScreen)
+            transitioningCoordinatorDelegate?.fullScreenChanged(source: self)
             playerControlsViewController.isFullScreen = isFullScreen
         }
     }

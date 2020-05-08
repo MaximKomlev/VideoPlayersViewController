@@ -41,7 +41,8 @@ class PlayerFullScreenViewInteractiveTransition: UIPercentDrivenInteractiveTrans
     // MARK: Helpers
     
     private func validatePanEdge(point: CGPoint) -> Bool {
-        if point.y > 0 && point.y < 100 {
+        let topSafeOffset = playerFullScreenViewController.view.safeAreaInsets.top
+        if point.y > topSafeOffset && point.y < 100 {
             return true
         }
         return false

@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 protocol PlayerViewControllerTransitioningCoordinatorDelegate: class {
-    func fullScreenChanged(isFullScreen: Bool)
+    func fullScreenChanged(source: PlayerViewControllerProtocol)
 }
 
 protocol PlayerViewControllerTransitioningControllerProtocol: UIViewController {
@@ -118,8 +118,8 @@ extension PlayerViewControllerTransitioningCoordinator: PlayerFullScreenViewInte
 // MARK: PlayerViewControllerTransitioningCoordinatorDelegate
 
 extension PlayerViewControllerTransitioningCoordinator: PlayerViewControllerTransitioningCoordinatorDelegate {
-    func fullScreenChanged(isFullScreen: Bool) {
-        if isFullScreen {
+    func fullScreenChanged(source: PlayerViewControllerProtocol) {
+        if source.isFullScreen {
             guard !fullScreenViewController.isPresented() else {
                 return
             }

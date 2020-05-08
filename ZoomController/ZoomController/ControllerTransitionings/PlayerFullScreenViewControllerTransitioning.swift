@@ -61,13 +61,15 @@ class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioni
         containerView.layer.masksToBounds = true
 
         containerView.addSubview(fullScreenView)
+
         fullScreenView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            fullScreenView.topAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.topAnchor, constant: 0),
-            fullScreenView.leadingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            fullScreenView.trailingAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            fullScreenView.bottomAnchor.constraint(equalTo: containerView.safeAreaLayoutGuide.bottomAnchor, constant: 0)
+            fullScreenView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 0),
+            fullScreenView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 0),
+            fullScreenView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: 0),
+            fullScreenView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)
         ])
+
         containerView.center = viewController.view.convert(transitioningCoordinator.initialViewRect().origin,
                                                            from: transitioningCoordinator.initialView())
         containerView.bounds.size = transitioningCoordinator.initialViewRect().size

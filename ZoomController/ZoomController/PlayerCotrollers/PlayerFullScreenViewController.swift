@@ -97,14 +97,13 @@ extension PlayerFullScreenViewController: PlayerViewControllerTransitioningContr
         addChild(viewController)
         viewController.didMove(toParent: self)
         
-        let margin = ThemeManager.shared.currentTheme.contentMargin
         view.addSubview(playerView)
         playerView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            playerView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
-            playerView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            playerView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            playerView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -margin)
+            playerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
         ])
         playerViewController = viewController
     }
