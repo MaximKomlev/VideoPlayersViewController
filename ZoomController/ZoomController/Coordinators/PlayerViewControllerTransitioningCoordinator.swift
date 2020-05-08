@@ -25,8 +25,7 @@ protocol PlayerViewControllerTransitioningCoordinatorProtocol: class {
          widgetViewController: PlayerViewControllerTransitioningControllerProtocol,
          fullScreenViewController: PlayerViewControllerTransitioningControllerProtocol)
     
-    func initialViewRect() -> CGRect
-    func initialView() -> UIView
+    func initialViewRect(at viewController: UIViewController) -> CGRect
 
     func transitionFinished(controllerTransitioning: BaseViewControllerTransitioning, wasCancelled: Bool)
 }
@@ -61,12 +60,8 @@ class PlayerViewControllerTransitioningCoordinator: NSObject {
 // MARK: SourceViewPlayerViewControllerTransitioningProtocol
 
 extension PlayerViewControllerTransitioningCoordinator: PlayerViewControllerTransitioningCoordinatorProtocol {
-    func initialViewRect() -> CGRect {
-        return widgetViewController.playerViewRect()
-    }
-    
-    func initialView() -> UIView {
-        return widgetViewController.view
+    func initialViewRect(at viewController: UIViewController) -> CGRect {
+        return viewController.view.convert(widgetViewController.playerViewRect(), from: widgetViewController.view)
     }
     
     func transitionFinished(controllerTransitioning: BaseViewControllerTransitioning, wasCancelled: Bool) {

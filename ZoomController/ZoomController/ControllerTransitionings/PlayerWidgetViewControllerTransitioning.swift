@@ -33,13 +33,13 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
         containerView.layer.masksToBounds = true
 
         let sourceRect = CGRect(origin: containerView.center, size: containerView.bounds.size)
-        let destinationRect = viewController.view.convert(transitioningCoordinator.initialViewRect(),
-                                                          from: transitioningCoordinator.initialView())
+        let destinationRect = transitioningCoordinator.initialViewRect(at: viewController)
 
         UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeCubic, .layoutSubviews], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
                 containerView.bounds.size = destinationRect.size
                 containerView.center = destinationRect.origin
+                containerView.layoutIfNeeded()
             }
         }) { (_) in
             containerView.layer.cornerRadius = 0

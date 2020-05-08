@@ -70,9 +70,9 @@ class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioni
             fullScreenView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 0)
         ])
 
-        containerView.center = viewController.view.convert(transitioningCoordinator.initialViewRect().origin,
-                                                           from: transitioningCoordinator.initialView())
-        containerView.bounds.size = transitioningCoordinator.initialViewRect().size
+        let initialRect = transitioningCoordinator.initialViewRect(at: viewController)
+        containerView.center = initialRect.origin
+        containerView.bounds.size = initialRect.size
 
         UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeCubic, .layoutSubviews], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
