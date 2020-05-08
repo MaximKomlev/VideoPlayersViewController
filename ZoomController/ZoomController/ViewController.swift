@@ -157,6 +157,14 @@ class ViewController: UIViewController {
         }, completion: nil)
     }
     
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .portrait
+    }
+
+    override var shouldAutorotate: Bool {
+        return false
+    }
+    
     // MARK: Helpers
     
     private func layoutContentView() {

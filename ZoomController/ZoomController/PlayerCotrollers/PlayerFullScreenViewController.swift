@@ -56,6 +56,18 @@ class PlayerFullScreenViewController: UIViewController, PlayerFullScreenViewCont
         return .top
     }
     
+    override var prefersHomeIndicatorAutoHidden: Bool {
+        return true
+    }
+
+    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        return .all
+    }
+
+    override var shouldAutorotate: Bool {
+        return true
+    }
+
 }
 
 extension PlayerFullScreenViewController: PlayerViewControllerTransitioningControllerProtocol {

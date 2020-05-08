@@ -65,9 +65,14 @@ To see how it works I added snapshots.
 <img src="./screenshots/fullframed_picture.jpeg" width="812"/>
 </p>
 
-***Zoomed image***
+***Digitally Zoomed image***
 <p align="center">
-<img src="./screenshots/zoomed_area.jpeg" width="812"/>
+<img src="./screenshots/digitally_zoomed_area.jpeg" width="812"/>
+</p>
+
+***HD Zoomed image***
+<p align="center">
+<img src="./screenshots/hd_zoomed_area.jpeg" width="812"/>
 </p>
 
 ***Zoomed image insixe of full framed image***
