@@ -54,11 +54,9 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
                 let sizeAdjustment = CGFloat(50)
                 containerView.bounds.size = CGSize(width: sourceRect.size.width - sizeAdjustment * ratio,
                                                    height: sourceRect.size.height - sizeAdjustment)
-                containerView.layoutIfNeeded()
                 //
                 containerView.bounds.size = sourceRect.size
                 containerView.center = sourceRect.origin
-                containerView.layoutIfNeeded()
             }
             transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
             self.transitioningCoordinator.transitionFinished(controllerTransitioning: self,
