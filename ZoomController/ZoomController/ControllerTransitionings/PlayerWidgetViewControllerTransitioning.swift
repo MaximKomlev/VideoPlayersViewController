@@ -40,7 +40,6 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
                 containerView.bounds.size = destinationRect.size
                 containerView.center = destinationRect.origin
-                containerView.layoutIfNeeded()
             }
         }) { (_) in
             containerView.layer.cornerRadius = 0
