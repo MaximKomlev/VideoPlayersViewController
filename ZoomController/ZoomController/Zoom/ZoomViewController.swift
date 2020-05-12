@@ -191,13 +191,10 @@ protocol ZoomViewControllerProtocol {
         contentView.clipsToBounds = true
         contentView.isUserInteractionEnabled = true
         contentView.addSubview(cropView)
-        contentView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            contentView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-            contentView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            contentView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            contentView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-        ])
+        contentView.bounds.size = view.bounds.size
+        contentView.center = view.center
+        contentView.translatesAutoresizingMaskIntoConstraints = true
+        contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
 
         // cropView view to hold draggable and scalable view
         let size = view.bounds.size
@@ -287,6 +284,7 @@ protocol ZoomViewControllerProtocol {
     func setPlayerView(_ view: UIView) -> Bool {
         if view.subviews.count == 0 {
             playerView.addSubview(view)
+            view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
             return true
         }
         return false

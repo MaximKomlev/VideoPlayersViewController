@@ -51,6 +51,8 @@ class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioni
                 return
         }
 
+        transitioningCoordinator.transitionStarted(controllerTransitioning: self)
+
         let duration = transitionDuration(using: transitionContext)
         let containerView = transitionContext.containerView
         containerView.backgroundColor = fullScreenView.backgroundColor
@@ -79,6 +81,8 @@ class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioni
         }) { (success) in
             containerView.layer.cornerRadius = 0
             transitionContext.completeTransition(true)
+            self.transitioningCoordinator.transitionFinished(controllerTransitioning: self,
+                                                                      wasCancelled: false)
         }
 
     }

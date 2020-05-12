@@ -21,7 +21,6 @@ class PlayerWidgetViewController: UIViewController {
     
     private let widgetView = PlayerWidgetView()
     private var playerViewController: PlayerViewControllerProtocol!
-    private var fullScreenViewController: PlayerFullScreenViewControllerProtocol!
     private var transitioningCoordinator: PlayerViewControllerTransitioningCoordinatorProtocol!
     
     // MARK: Initializer/Deinitializer
@@ -37,11 +36,8 @@ class PlayerWidgetViewController: UIViewController {
         playerViewController = PlayerViewController()
         playerViewController.videoUrl = model.videoUrl ?? ""
         
-        fullScreenViewController = PlayerFullScreenViewController()
-        
         transitioningCoordinator = PlayerViewControllerTransitioningCoordinator(playerViewController: playerViewController,
-                                                                                widgetViewController: self,
-                                                                                fullScreenViewController: fullScreenViewController)
+                                                                                widgetViewController: self)
     }
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -90,10 +86,6 @@ extension PlayerWidgetViewController: PlayerWidgetViewControllerProtocol {
 // MARK: PlayerViewControllerTransitioningProtocol
 
 extension PlayerWidgetViewController: PlayerViewControllerTransitioningControllerProtocol {
-    func isPresented() -> Bool {
-        return !fullScreenViewController.isPresented()
-    }
-
     func playerViewRect() -> CGRect {
         return widgetView.videoContentRect
     }
@@ -111,9 +103,6 @@ extension PlayerWidgetViewController: PlayerViewControllerTransitioningControlle
     }
 
     func movePlayerViewController(_ viewController: PlayerViewControllerProtocol) {
-        viewController.willMove(toParent: nil)
-        viewController.view.removeFromSuperview()
-        viewController.removeFromParent()
         addChild(viewController)
         viewController.didMove(toParent: self)
         widgetView.addPlayerView(viewController.view)

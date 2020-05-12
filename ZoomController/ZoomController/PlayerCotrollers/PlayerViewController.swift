@@ -85,7 +85,6 @@ class PlayerViewController: UIViewController, PlayerViewControllerProtocol {
         zoomModel = ZoomModel(delegate: self)
 
         playerView.delegate = self
-        playerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         zoomViewController.setPlayerView(playerView)
         zoomViewController.viewDidLoad(view)
 
@@ -98,14 +97,10 @@ class PlayerViewController: UIViewController, PlayerViewControllerProtocol {
             addChild(playerControlsViewController)
             playerControlsViewController.didMove(toParent: self)
             view.addSubview(controlsView)
-
-            controlsView.translatesAutoresizingMaskIntoConstraints = false
-            NSLayoutConstraint.activate([
-                controlsView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-                controlsView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-                controlsView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-                controlsView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-            ])
+            controlsView.bounds.size = view.bounds.size
+            controlsView.center = view.center
+            controlsView.translatesAutoresizingMaskIntoConstraints = true
+            controlsView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         }
         
         playerControlsViewController.show(false)

@@ -110,6 +110,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        isModalInPresentation = true
         layout = CollectionViewLayout(layoutDelegate: self)
         layout.boundaryMargin = ThemeManager.shared.currentTheme.contentMargin
         layout.itemSpace = ThemeManager.shared.currentTheme.contentItemSpace
@@ -127,6 +128,14 @@ class ViewController: UIViewController {
         }
         
         layoutContentView()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
     }
     
     override func viewDidLayoutSubviews() {
@@ -160,9 +169,17 @@ class ViewController: UIViewController {
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .portrait
     }
+    
+    override var interfaceOrientation: UIInterfaceOrientation {
+        return .portrait
+    }
+    
+    override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
+        return .portrait
+    }
 
     override var shouldAutorotate: Bool {
-        return false
+        return true
     }
     
     // MARK: Helpers

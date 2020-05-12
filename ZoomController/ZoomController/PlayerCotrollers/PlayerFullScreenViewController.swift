@@ -12,7 +12,7 @@ import Foundation
 protocol PlayerFullScreenViewControllerProtocol: PlayerViewControllerTransitioningControllerProtocol {
 }
 
-class PlayerFullScreenViewController: UIViewController, PlayerFullScreenViewControllerProtocol {
+class PlayerFullScreenViewController: UIViewController {
     
     // MARK: Fields
   
@@ -48,18 +48,10 @@ class PlayerFullScreenViewController: UIViewController, PlayerFullScreenViewCont
         super.viewDidLayoutSubviews()
     }
         
-    override var prefersStatusBarHidden: Bool {
-        return true
-    }
-    
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
         return .top
     }
     
-    override var prefersHomeIndicatorAutoHidden: Bool {
-        return true
-    }
-
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return .all
     }
@@ -67,14 +59,13 @@ class PlayerFullScreenViewController: UIViewController, PlayerFullScreenViewCont
     override var shouldAutorotate: Bool {
         return true
     }
+            
+}
 
+extension PlayerFullScreenViewController: PlayerFullScreenViewControllerProtocol {
 }
 
 extension PlayerFullScreenViewController: PlayerViewControllerTransitioningControllerProtocol {
-    func isPresented() -> Bool {
-        return playerViewController != nil
-    }
-
     func playerViewRect() -> CGRect {
         return playerViewController?.view.frame ?? CGRect.zero
     }
@@ -103,20 +94,14 @@ extension PlayerFullScreenViewController: PlayerViewControllerTransitioningContr
         originalBackGroundColor = playerView.backgroundColor
         playerView.backgroundColor = view.backgroundColor
         
-        viewController.willMove(toParent: nil)
-        playerView.removeFromSuperview()
-        viewController.removeFromParent()
         addChild(viewController)
         viewController.didMove(toParent: self)
         
         view.addSubview(playerView)
-        playerView.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            playerView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
-            playerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            playerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            playerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
-        ])
+        playerView.bounds.size = view.bounds.size
+        playerView.center = view.center
+        playerView.translatesAutoresizingMaskIntoConstraints = true
+        playerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         playerViewController = viewController
     }
     

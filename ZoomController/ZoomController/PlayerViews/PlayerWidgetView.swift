@@ -35,7 +35,6 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
     private let desc = UILabel()
     
     private var layoutConstraints = [NSLayoutConstraint]()
-    private var holderViewLayoutConstraints = [NSLayoutConstraint]()
 
     // MARK: Initializer/Deinitializer
     
@@ -127,15 +126,11 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
         
         contentView.isUserInteractionEnabled = true
         contentView.addSubview(playerView)
-        playerView.translatesAutoresizingMaskIntoConstraints = false
-        holderViewLayoutConstraints.append(contentsOf: [
-            playerView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0),
-            playerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0),
-            playerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0),
-            playerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0)
-        ])
-        layoutConstraints.append(contentsOf: holderViewLayoutConstraints)
-        
+        playerView.bounds.size = contentView.bounds.size
+        playerView.center = contentView.center
+        playerView.translatesAutoresizingMaskIntoConstraints = true
+        playerView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+                
         setNeedsLayout()
     }
     
@@ -197,7 +192,6 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
             desc.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentMarging),
             desc.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -contentMarging)
         ])
-        layoutConstraints.append(contentsOf: holderViewLayoutConstraints)
 
         NSLayoutConstraint.activate(layoutConstraints)
     }

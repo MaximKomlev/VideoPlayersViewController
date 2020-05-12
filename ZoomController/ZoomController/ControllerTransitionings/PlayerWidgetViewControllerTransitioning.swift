@@ -24,6 +24,8 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
                 return
         }
 
+        transitioningCoordinator.transitionStarted(controllerTransitioning: self)
+
         let duration = transitionDuration(using: transitionContext)
         let containerView = transitionContext.containerView
         containerView.backgroundColor = fullScreenView.backgroundColor
@@ -33,8 +35,16 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
         containerView.layer.masksToBounds = true
 
         let sourceRect = CGRect(origin: containerView.center, size: containerView.bounds.size)
-        let destinationRect = transitioningCoordinator.initialViewRect(at: viewController)
-
+        var destinationRect = transitioningCoordinator.initialViewRect(at: viewController)
+        if transitioningCoordinator.isRotationNeeded() {
+            var playerCenter = destinationRect.origin
+            playerCenter = playerCenter.applying(CGAffineTransform(rotationAngle: CGFloat(Double.pi/2)))
+            destinationRect = CGRect(x:  -playerCenter.x,
+                                     y: playerCenter.y,
+                                     width: destinationRect.width,
+                                     height: destinationRect.height)
+        }
+        
         UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeCubic, .layoutSubviews], animations: {
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
                 containerView.bounds.size = destinationRect.size
@@ -43,15 +53,31 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
         }) { (_) in
             containerView.layer.cornerRadius = 0
             if !transitionContext.transitionWasCancelled {
-                fullScreenView.removeFromSuperview()
+                if self.transitioningCoordinator.isRotationNeeded() {
+                    UIView.animate(withDuration: duration, animations: {
+                        containerView.transform = CGAffineTransform(rotationAngle: -CGFloat(Double.pi / 2))
+                    }) { (_) in
+                        fullScreenView.removeFromSuperview()
+                        self.completeTransition(for: transitionContext)
+                    }
+                } else {
+                    fullScreenView.removeFromSuperview()
+                    self.completeTransition(for: transitionContext)
+                }
             } else {
                 containerView.center = sourceRect.origin
                 containerView.bounds.size = sourceRect.size
+                self.completeTransition(for: transitionContext)
             }
-            transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-            self.transitioningCoordinator.transitionFinished(controllerTransitioning: self,
-                                                                      wasCancelled: transitionContext.transitionWasCancelled)
         }
+    }
+    
+    // MARK: Helpers
+    
+    private func completeTransition(for transitionContext: UIViewControllerContextTransitioning) {
+        transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        transitioningCoordinator.transitionFinished(controllerTransitioning: self,
+                                                                  wasCancelled: transitionContext.transitionWasCancelled)
     }
 }
 

@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 
 protocol PlayerFullScreenViewInteractiveTransitionDelegate: class {
-    func dismiss()
+    func tryDismiss()
 }
 
 class PlayerFullScreenViewInteractiveTransition: UIPercentDrivenInteractiveTransition {
@@ -63,7 +63,7 @@ class PlayerFullScreenViewInteractiveTransition: UIPercentDrivenInteractiveTrans
             let beginPosition = sender.location(in: view)
             if validatePanEdge(point: beginPosition) {
                 isRunning = true
-                interactiveTransitionDelegate?.dismiss()
+                interactiveTransitionDelegate?.tryDismiss()
             }
         case .changed:
             update(percent)
