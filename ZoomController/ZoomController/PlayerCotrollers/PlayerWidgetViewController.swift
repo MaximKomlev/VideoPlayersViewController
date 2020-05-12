@@ -86,6 +86,10 @@ extension PlayerWidgetViewController: PlayerWidgetViewControllerProtocol {
 // MARK: PlayerViewControllerTransitioningProtocol
 
 extension PlayerWidgetViewController: PlayerViewControllerTransitioningControllerProtocol {
+    func isPresented() -> Bool {
+        return playerViewController != nil
+    }
+
     func playerViewRect() -> CGRect {
         return widgetView.videoContentRect
     }

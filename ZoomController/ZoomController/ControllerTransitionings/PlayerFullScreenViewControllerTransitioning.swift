@@ -30,6 +30,15 @@ class BaseViewControllerTransitioning: NSObject {
     var isFullScreenDirection: Bool {
         return false
     }
+    
+    // MARK: Helpers
+    
+    func completeTransition(for transitionContext: UIViewControllerContextTransitioning) {
+        transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
+        transitioningCoordinator.transitionFinished(controllerTransitioning: self,
+                                                                  wasCancelled: transitionContext.transitionWasCancelled)
+    }
+
 }
 
 class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioning, UIViewControllerAnimatedTransitioning {
@@ -80,9 +89,7 @@ class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioni
             }
         }) { (success) in
             containerView.layer.cornerRadius = 0
-            transitionContext.completeTransition(true)
-            self.transitioningCoordinator.transitionFinished(controllerTransitioning: self,
-                                                                      wasCancelled: false)
+            self.completeTransition(for: transitionContext)
         }
 
     }

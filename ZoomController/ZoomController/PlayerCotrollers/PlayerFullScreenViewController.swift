@@ -66,6 +66,10 @@ extension PlayerFullScreenViewController: PlayerFullScreenViewControllerProtocol
 }
 
 extension PlayerFullScreenViewController: PlayerViewControllerTransitioningControllerProtocol {
+    func isPresented() -> Bool {
+        return playerViewController != nil
+    }
+
     func playerViewRect() -> CGRect {
         return playerViewController?.view.frame ?? CGRect.zero
     }

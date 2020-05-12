@@ -72,12 +72,5 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
         }
     }
     
-    // MARK: Helpers
-    
-    private func completeTransition(for transitionContext: UIViewControllerContextTransitioning) {
-        transitionContext.completeTransition(!transitionContext.transitionWasCancelled)
-        transitioningCoordinator.transitionFinished(controllerTransitioning: self,
-                                                                  wasCancelled: transitionContext.transitionWasCancelled)
-    }
 }
 

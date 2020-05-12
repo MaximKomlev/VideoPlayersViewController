@@ -14,6 +14,7 @@ protocol PlayerViewControllerTransitioningCoordinatorDelegate: class {
 }
 
 protocol PlayerViewControllerTransitioningControllerProtocol: UIViewController {
+    func isPresented() -> Bool
     func playerViewRect() -> CGRect
     func removePlayerViewController() -> PlayerViewControllerProtocol?
     func movePlayerViewController(_ viewController: PlayerViewControllerProtocol)
@@ -60,7 +61,7 @@ class PlayerViewControllerTransitioningCoordinator: NSObject {
     // MARK: Helpers
     
     private func isFullScreen() -> Bool {
-        return fullScreenTransitioningWindow != nil
+        return fullScreenTransitioningWindow != nil || fullScreenViewController.isPresented()
     }
     
     private func isTransitioningWindowNedded() -> Bool {
@@ -162,11 +163,6 @@ extension PlayerViewControllerTransitioningCoordinator: UIViewControllerTransiti
         return interactiveTransitionController
     }
 
-}
-
-// MARK: UIAdaptivePresentationControllerDelegate
-
-extension PlayerViewControllerTransitioningCoordinator: UIAdaptivePresentationControllerDelegate {
 }
 
 // MARK: PlayerFullScreenViewInteractiveTransitionDelegate
