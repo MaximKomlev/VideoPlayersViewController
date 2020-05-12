@@ -84,5 +84,10 @@ And last topic which I would cover here is transition from widget view to fullsc
 Here is nothing complicated and UIKit framework provide whole set of classes to do that, just a few tips.
 First, I would recommend for the feature to adopt ***coordinator*** pattern, it will make code clean and readable. The class will need to adopt ***UIViewControllerTransitioningDelegate*** delegate and in my implementation have a references to widget view controller from where it will be transitioning to fullscreen, fullscreen controller and view controller who actually is transformed.
 Both classes fullscreen controller and widget controller adopt protocol which will be used by implementation of ***UIViewControllerAnimatedTransitioning*** to get info from where and to where perform transitioning. Actually the info can be gathering over transitioning context, but problem is that, that uikit manage source and destination controllers and it is not always what you want.
+One challenge which the most developers are faced it is how to proprly present fullscreen on iphone and suppress rotation underlyne screen. I spent a couple days to browse apple spec for any reference how to make it properly and unfortunatly without sucess. And actually for fullscreen mode, UIKit framework is removing presenting controller from hirarchy of UIWindow views to suppress firing events from window to controller. So, that is why I think (let me know if you have better idea) for the purpouse second UIWindow for the fullscreen controller should work well. A couple challenges is here.
+1. rotate view on minimizing fullscreen view.
+2. rotate home button for iphone X and higher.
+I beleave example will give more clear idea how it works then tons of words, so you can find everything in class ***PlayerViewControllerTransitioningCoordinator***.
+
 
 
