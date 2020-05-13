@@ -36,7 +36,8 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
 
         let sourceRect = CGRect(origin: containerView.center, size: containerView.bounds.size)
         var destinationRect = transitioningCoordinator.initialViewRect(at: viewController)
-        if transitioningCoordinator.isRotationNeeded() {
+        let isRotationNeeded = transitioningCoordinator.isRotationNeeded()
+        if isRotationNeeded {
             var playerCenter = destinationRect.origin
             playerCenter = playerCenter.applying(CGAffineTransform(rotationAngle: CGFloat(Double.pi/2)))
             destinationRect = CGRect(x:  -playerCenter.x,
@@ -49,21 +50,15 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
             UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
                 containerView.bounds.size = destinationRect.size
                 containerView.center = destinationRect.origin
+                if isRotationNeeded {
+                    containerView.transform = CGAffineTransform(rotationAngle: -CGFloat(Double.pi / 2))
+                }
             }
         }) { (_) in
             containerView.layer.cornerRadius = 0
             if !transitionContext.transitionWasCancelled {
-                if self.transitioningCoordinator.isRotationNeeded() {
-                    UIView.animate(withDuration: duration, animations: {
-                        containerView.transform = CGAffineTransform(rotationAngle: -CGFloat(Double.pi / 2))
-                    }) { (_) in
-                        fullScreenView.removeFromSuperview()
-                        self.completeTransition(for: transitionContext)
-                    }
-                } else {
-                    fullScreenView.removeFromSuperview()
-                    self.completeTransition(for: transitionContext)
-                }
+                fullScreenView.removeFromSuperview()
+                self.completeTransition(for: transitionContext)
             } else {
                 containerView.center = sourceRect.origin
                 containerView.bounds.size = sourceRect.size
