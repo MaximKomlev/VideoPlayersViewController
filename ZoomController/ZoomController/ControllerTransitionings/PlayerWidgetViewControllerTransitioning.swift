@@ -40,7 +40,7 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
         if isRotationNeeded {
             var playerCenter = destinationRect.origin
             playerCenter = playerCenter.applying(CGAffineTransform(rotationAngle: CGFloat(Double.pi/2)))
-            destinationRect = CGRect(x:  -playerCenter.x,
+            destinationRect = CGRect(x: -playerCenter.x,
                                      y: playerCenter.y,
                                      width: destinationRect.width,
                                      height: destinationRect.height)
