@@ -10,6 +10,7 @@ import UIKit
 import Foundation
 
 protocol PlayerFullScreenViewInteractiveTransitionDelegate: class {
+    func isRotationNeeded() -> Bool
     func tryDismiss()
 }
 
@@ -42,7 +43,8 @@ class PlayerFullScreenViewInteractiveTransition: UIPercentDrivenInteractiveTrans
     
     private func validatePanEdge(point: CGPoint) -> Bool {
         let topSafeOffset = playerFullScreenViewController.view.safeAreaInsets.top
-        if point.y > topSafeOffset && point.y < 100 {
+        let bottomSafeOffset = playerFullScreenViewController.view.safeAreaInsets.bottom + topSafeOffset
+        if point.y > topSafeOffset && point.y < playerFullScreenViewController.view.frame.maxY - bottomSafeOffset {
             return true
         }
         return false
@@ -55,7 +57,10 @@ class PlayerFullScreenViewInteractiveTransition: UIPercentDrivenInteractiveTrans
             return
         }
 
-        let offset = sender.translation(in: view)
+        var offset = sender.translation(in: view)
+        if interactiveTransitionDelegate?.isRotationNeeded() ?? false {
+            offset = offset.applying(CGAffineTransform(rotationAngle: -CGFloat(Double.pi/2)))
+        }
         let percent = offset.y / view.bounds.height
         
         switch sender.state {
