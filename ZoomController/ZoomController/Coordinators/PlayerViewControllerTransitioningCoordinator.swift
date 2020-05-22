@@ -116,6 +116,13 @@ extension PlayerViewControllerTransitioningCoordinator: PlayerViewControllerTran
     }
     
     func transitionStarted(controllerTransitioning: BaseViewControllerTransitioning) {
+        guard controllerTransitioning.isFullScreenDirection else {
+            return
+        }
+        
+        if let vc = widgetViewController.removePlayerViewController() {
+            fullScreenViewController?.movePlayerViewController(vc)
+        }
     }
     
     func transitionFinished(controllerTransitioning: BaseViewControllerTransitioning, wasCancelled: Bool) {
@@ -143,11 +150,6 @@ extension PlayerViewControllerTransitioningCoordinator: PlayerViewControllerTran
 
 extension PlayerViewControllerTransitioningCoordinator: UIViewControllerTransitioningDelegate {
     func animationController(forPresented presented: UIViewController, presenting: UIViewController, source: UIViewController) -> UIViewControllerAnimatedTransitioning? {
-
-        if let vc = widgetViewController.removePlayerViewController() {
-            fullScreenViewController?.movePlayerViewController(vc)
-        }
-        
         return PlayerFullScreenViewControllerTransitioning(coordinator: self)
     }
 
