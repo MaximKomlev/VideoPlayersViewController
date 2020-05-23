@@ -39,11 +39,14 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
         let isRotationNeeded = transitioningCoordinator.isRotationNeeded()
         if isRotationNeeded {
             var playerCenter = destinationRect.origin
-            playerCenter = playerCenter.applying(CGAffineTransform(rotationAngle: CGFloat(Double.pi/2)))
-            destinationRect = CGRect(x: -playerCenter.x,
-                                     y: playerCenter.y,
-                                     width: destinationRect.width,
-                                     height: destinationRect.height)
+            let interfaceOrientation = containerView.window?.windowScene?.interfaceOrientation ?? .landscapeRight
+            playerCenter = playerCenter.applying(CGAffineTransform(rotationAngle: CGFloat(Double.pi / 2 )))
+            if interfaceOrientation == .landscapeRight {
+                playerCenter.x = -playerCenter.x
+            } else {
+                playerCenter.x = viewController.view.bounds.width + playerCenter.x
+            }
+            destinationRect = CGRect(origin: playerCenter, size: destinationRect.size)
         }
         
         UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeCubic, .layoutSubviews], animations: {
@@ -51,7 +54,10 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
                 containerView.bounds.size = destinationRect.size
                 containerView.center = destinationRect.origin
                 if isRotationNeeded {
-                    containerView.transform = CGAffineTransform(rotationAngle: -CGFloat(Double.pi / 2))
+                    let angel = containerView.window?.windowScene?.interfaceOrientation ?? .landscapeRight ==  .landscapeRight ?
+                        -CGFloat(Double.pi / 2) :
+                        CGFloat(Double.pi / 2)
+                    containerView.transform = CGAffineTransform(rotationAngle: angel)
                 }
             }
         }) { (_) in
