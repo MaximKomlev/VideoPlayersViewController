@@ -11,6 +11,9 @@ import Foundation
 
 protocol PlayerWidgetViewControllerProtocol: UIViewController {
     func sizeConstrained(to width: CGFloat) -> CGSize
+    
+    var isPlaying: Bool { get }
+    var isFullScreen: Bool { get set }
 }
 
 class PlayerWidgetViewController: UIViewController {
@@ -68,6 +71,23 @@ class PlayerWidgetViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
     }
+    
+    // MARK: PlayerWidgetViewControllerProtocol
+    
+    var isPlaying: Bool {
+        return playerViewController.isPlaying
+    }
+    
+    var isFullScreen: Bool {
+        get {
+            return playerViewController.isFullScreen
+        } set (v) {
+            if playerViewController.isFullScreen != v {
+                playerViewController.isFullScreen = v
+            }
+        }
+    }
+
 }
 
 // MARK: PlayerWidgetViewControllerProtocol

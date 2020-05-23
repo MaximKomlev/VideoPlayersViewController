@@ -92,6 +92,28 @@ class PlayerViewControllerTransitioningCoordinator: NSObject {
         fullScreenViewController?.dismiss(animated: true)
     }
     
+   private func cancelPresent() {
+   }
+
+   private func cancelDismiss() {
+       playerViewController.isFullScreen = true
+   }
+
+   private func presented() {
+   }
+
+   private func dismissed() {
+       if let vc = fullScreenViewController?.removePlayerViewController() {
+           widgetViewController.movePlayerViewController(vc)
+       }
+
+       fullScreenTransitioningWindow?.isHidden = true
+       fullScreenTransitioningWindow?.rootViewController = nil
+       fullScreenTransitioningWindow = nil
+
+       widgetViewController.view.window?.makeKeyAndVisible()
+   }
+    
 }
 
 // MARK: SourceViewPlayerViewControllerTransitioningProtocol
@@ -126,21 +148,19 @@ extension PlayerViewControllerTransitioningCoordinator: PlayerViewControllerTran
     }
     
     func transitionFinished(controllerTransitioning: BaseViewControllerTransitioning, wasCancelled: Bool) {
-        if wasCancelled && !controllerTransitioning.isFullScreenDirection {
-            playerViewController.isFullScreen = true
+        if wasCancelled {
+            if !controllerTransitioning.isFullScreenDirection {
+                cancelDismiss()
+            } else {
+                cancelPresent()
+            }
             return
         }
         
         if !controllerTransitioning.isFullScreenDirection {
-            if let vc = fullScreenViewController?.removePlayerViewController() {
-                widgetViewController.movePlayerViewController(vc)
-            }
-
-            fullScreenTransitioningWindow?.isHidden = true
-            fullScreenTransitioningWindow?.rootViewController = nil
-            fullScreenTransitioningWindow = nil
-
-            widgetViewController.view.window?.makeKeyAndVisible()
+            dismissed()
+        } else {
+            presented()
         }
         UIViewController.attemptRotationToDeviceOrientation()
     }

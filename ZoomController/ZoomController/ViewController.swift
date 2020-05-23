@@ -128,6 +128,12 @@ class ViewController: UIViewController {
         }
         
         layoutContentView()
+        
+        if supportedInterfaceOrientations != .all {
+            UIDevice.current.beginGeneratingDeviceOrientationNotifications()
+            NotificationCenter.default.addObserver(self, selector: #selector(phoneRotated), name: UIDevice.orientationDidChangeNotification, object: nil)
+        }
+
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -167,6 +173,11 @@ class ViewController: UIViewController {
     }
     
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
+        if UIScreen.main.traitCollection.horizontalSizeClass == .regular,
+            UIScreen.main.traitCollection.verticalSizeClass == .regular {
+            return .all
+        }
+
         return .portrait
     }
     
@@ -180,6 +191,29 @@ class ViewController: UIViewController {
 
     override var shouldAutorotate: Bool {
         return true
+    }
+    
+    // MARK: Notifications and events handlers
+    
+    @objc private func phoneRotated() {
+        if UIDevice.current.orientation.isLandscape {
+            var playingWidget: PlayerWidgetViewControllerProtocol?
+            var numberPlayingWidgets = 0
+            for controller in self.children {
+                if let controller = controller as? PlayerWidgetViewControllerProtocol,
+                    controller.isPlaying {
+                    playingWidget = controller
+                    numberPlayingWidgets += 1
+                }
+            }
+            if numberPlayingWidgets == 1,
+                let widgetFrame = playingWidget?.view.frame {
+                let container = CGRect(origin: CGPoint(x: contentView.contentOffset.x,
+                                                       y: contentView.contentOffset.y),
+                                       size: contentView.frame.size)
+                playingWidget?.isFullScreen = container.intersects(widgetFrame)
+            }
+        }
     }
     
     // MARK: Helpers

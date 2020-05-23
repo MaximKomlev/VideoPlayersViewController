@@ -121,13 +121,16 @@ class PlayerViewController: UIViewController, PlayerViewControllerProtocol {
             playerControlsViewController.isFullScreen = isFullScreen
         }
     }
-    
-    var isPlaying: Bool = false {
-        didSet {
-            guard playerView.isPlaying != isPlaying else {
+
+    var isPlaying: Bool {
+        get {
+            return playerView.isPlaying
+        }
+        set (v) {
+            guard playerView.isPlaying != v else {
                 return
             }
-            if isPlaying {
+            if v {
                 playerView.play()
             } else {
                 playerView.pause()
