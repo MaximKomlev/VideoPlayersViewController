@@ -59,7 +59,10 @@ class PlayerFullScreenViewInteractiveTransition: UIPercentDrivenInteractiveTrans
 
         var offset = sender.translation(in: view)
         if interactiveTransitionDelegate?.isRotationNeeded() ?? false {
-            offset = offset.applying(CGAffineTransform(rotationAngle: -CGFloat(Double.pi/2)))
+            let interfaceOrientation =
+                playerFullScreenViewController.view.window?.windowScene?.interfaceOrientation ?? .landscapeRight
+            let angel = interfaceOrientation == .landscapeRight ? -CGFloat(Double.pi/2) : CGFloat(Double.pi/2)
+            offset = offset.applying(CGAffineTransform(rotationAngle: angel))
         }
         let percent = offset.y / view.bounds.height
         
