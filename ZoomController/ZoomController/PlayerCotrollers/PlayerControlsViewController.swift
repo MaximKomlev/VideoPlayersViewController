@@ -38,6 +38,8 @@ class PlayerControlsViewController: UIViewController,
     private var isSeeking: Bool = false
 
     private var layoutConstraints = [NSLayoutConstraint]()
+    private var bottomSafeFooterMargingConstraint: NSLayoutConstraint?
+    private var heightBodyConstraint: NSLayoutConstraint?
 
     // MARK: Initializer/Deinitializer
     
@@ -85,7 +87,12 @@ class PlayerControlsViewController: UIViewController,
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-        makeLayoutConstraints()
+        let footerBottomMargin = ThemeManager.shared.currentTheme.itemInsets +
+            (isFullScreen ? view.window?.safeAreaInsets.bottom ?? CGFloat(20) : 0)
+        bottomSafeFooterMargingConstraint?.constant = -footerBottomMargin
+        
+        let bodyHeight = bodyView.size.height
+        heightBodyConstraint?.constant = bodyHeight
     }
     
     // MARK: PlayerControlsViewControllerProtocol
@@ -148,23 +155,28 @@ class PlayerControlsViewController: UIViewController,
         let bottomConstraint = bodyView.bottomAnchor.constraint(lessThanOrEqualTo: footerView.topAnchor, constant: 0)
         bottomConstraint.priority = UILayoutPriority.required
         
+        let heightBodyViewConstraint = bodyView.heightAnchor.constraint(equalToConstant: bodyHeight)
+        heightBodyConstraint = heightBodyViewConstraint
+                
         layoutConstraints.append(contentsOf: [
             centerYConstraint,
             bodyView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             bodyView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
-            bodyView.heightAnchor.constraint(equalToConstant: bodyHeight),
+            heightBodyViewConstraint,
             bottomConstraint
         ])
         
         let footerBottomMargin = ThemeManager.shared.currentTheme.itemInsets +
             (isFullScreen ? view.window?.safeAreaInsets.bottom ?? CGFloat(20) : 0)
-            
+        let bottomFooterConstraint = footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -footerBottomMargin)
+        bottomSafeFooterMargingConstraint = bottomFooterConstraint
+
         let footerHeight = footerView.size.height
         layoutConstraints.append(contentsOf: [
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             footerView.heightAnchor.constraint(equalToConstant: footerHeight),
-            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -footerBottomMargin)
+            bottomFooterConstraint
         ])
 
         layoutConstraints.append(contentsOf: [

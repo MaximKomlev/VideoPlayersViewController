@@ -57,10 +57,6 @@ class PlayerFullScreenTransitioningWindowRootController: UIViewController {
           view.backgroundColor = .clear
       }
 
-      override func viewDidLayoutSubviews() {
-          super.viewDidLayoutSubviews()
-      }
-          
       override var prefersStatusBarHidden: Bool {
           return true
       }

@@ -35,6 +35,7 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
     private let desc = UILabel()
     
     private var layoutConstraints = [NSLayoutConstraint]()
+    private var titleHeightConstraint: NSLayoutConstraint?
 
     // MARK: Initializer/Deinitializer
     
@@ -55,15 +56,16 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
     }
     
     deinit {}
-    
+
     // MARK: View life cycle
     
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        makeLayoutConstraints()
+        let infoContentHeight = bounds.height - videoContentSize.height
+        titleHeightConstraint?.constant = infoContentHeight * 1 / 3
     }
-    
+
     // MARK: PlayerViewProtocol
     
     var isBorder: Bool = false {
@@ -165,6 +167,8 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
         layer.borderColor = UIColor.lightGray.cgColor
         layer.borderWidth = 0
         layer.masksToBounds = true
+        
+        makeLayoutConstraints()
     }
     
     private func makeLayoutConstraints() {
@@ -179,11 +183,14 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
         ])
         
         let infoContentHeight = bounds.height - videoContentSize.height
+        let headerTitleHeightConstraint = title.heightAnchor.constraint(equalToConstant: infoContentHeight * 1 / 3)
+        titleHeightConstraint = headerTitleHeightConstraint
+        
         layoutConstraints.append(contentsOf: [
             title.topAnchor.constraint(equalTo: contentView.bottomAnchor, constant: contentMarging),
             title.leadingAnchor.constraint(equalTo: leadingAnchor, constant: contentMarging),
             title.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -contentMarging),
-            title.heightAnchor.constraint(equalToConstant: infoContentHeight * 1 / 3)
+            headerTitleHeightConstraint
         ])
 
         layoutConstraints.append(contentsOf: [

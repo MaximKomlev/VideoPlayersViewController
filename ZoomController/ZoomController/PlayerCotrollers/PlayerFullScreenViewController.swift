@@ -44,10 +44,6 @@ class PlayerFullScreenViewController: UIViewController {
         view.backgroundColor = .black
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-        
     override var preferredScreenEdgesDeferringSystemGestures: UIRectEdge {
         return .top
     }

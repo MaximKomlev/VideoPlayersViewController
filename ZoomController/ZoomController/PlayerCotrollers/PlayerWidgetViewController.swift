@@ -68,10 +68,6 @@ class PlayerWidgetViewController: UIViewController {
         ])
     }
 
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    }
-    
     // MARK: PlayerWidgetViewControllerProtocol
     
     var isPlaying: Bool {

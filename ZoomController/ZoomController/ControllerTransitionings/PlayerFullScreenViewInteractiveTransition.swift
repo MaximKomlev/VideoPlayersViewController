@@ -57,21 +57,26 @@ class PlayerFullScreenViewInteractiveTransition: UIPercentDrivenInteractiveTrans
             return
         }
 
+        let isRotationNeeded = interactiveTransitionDelegate?.isRotationNeeded() ?? false
+        let interfaceOrientation =
+            playerFullScreenViewController.view.window?.windowScene?.interfaceOrientation ?? .landscapeRight
+        
         var offset = sender.translation(in: view)
-        if interactiveTransitionDelegate?.isRotationNeeded() ?? false {
-            let interfaceOrientation =
-                playerFullScreenViewController.view.window?.windowScene?.interfaceOrientation ?? .landscapeRight
+        if isRotationNeeded {
             let angel = interfaceOrientation == .landscapeRight ? -CGFloat(Double.pi/2) : CGFloat(Double.pi/2)
             offset = offset.applying(CGAffineTransform(rotationAngle: angel))
         }
         let percent = offset.y / view.bounds.height
-        
+
         switch sender.state {
         case .began:
             let beginPosition = sender.location(in: view)
             if validatePanEdge(point: beginPosition) {
                 isRunning = true
                 interactiveTransitionDelegate?.tryDismiss()
+            } else {
+                isRunning = false
+                cancel()
             }
         case .changed:
             update(percent)
