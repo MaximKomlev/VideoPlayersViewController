@@ -70,7 +70,7 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
     
     var isBorder: Bool = false {
         didSet {
-            if(isBorder) {
+            if isBorder {
                 layer.borderWidth = 1
             } else {
                 layer.borderWidth = 0
@@ -80,7 +80,7 @@ class PlayerWidgetView: UIView, PlayerWidgetViewProtocol {
     
     var isShadow: Bool = false {
         didSet {
-            if (isShadow) {
+            if isShadow {
                 layer.shadowOpacity = 0.6
                 layer.shadowRadius = 2
             } else {
