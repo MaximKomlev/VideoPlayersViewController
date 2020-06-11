@@ -75,7 +75,7 @@ To see how it works I added snapshots.
 <img src="./screenshots/hd_zoomed_area.jpeg" width="812"/>
 </p>
 
-***Zoom out, zoomed image insixe of full framed image***
+***Zoom out, zoomed image inside of full framed image***
 <p align="center">
 <img src="./screenshots/zoomed_picture_in_fullframed.jpeg" width="812"/>
 </p>
