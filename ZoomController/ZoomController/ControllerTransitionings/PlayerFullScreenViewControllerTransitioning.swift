@@ -79,14 +79,12 @@ class PlayerFullScreenViewControllerTransitioning: BaseViewControllerTransitioni
         containerView.center = initialRect.origin
         containerView.bounds.size = initialRect.size
 
-        UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeCubic, .layoutSubviews], animations: {
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
-                containerView.bounds = fullScreenView.window?.bounds ?? UIScreen.main.bounds
-                containerView.center = fullScreenView.window?.center ?? CGPoint(x: UIScreen.main.bounds.width / 2,
-                                                                                y: UIScreen.main.bounds.height / 2)
-                fullScreenView.bounds = containerView.bounds
-                fullScreenView.center = containerView.center
-            }
+        UIView.animate(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
+            containerView.bounds = fullScreenView.window?.bounds ?? UIScreen.main.bounds
+            containerView.center = fullScreenView.window?.center ?? CGPoint(x: UIScreen.main.bounds.width / 2,
+                                                                            y: UIScreen.main.bounds.height / 2)
+            fullScreenView.bounds = containerView.bounds
+            fullScreenView.center = containerView.center
         }) { (success) in
             containerView.layer.cornerRadius = 0
             self.completeTransition(for: transitionContext)

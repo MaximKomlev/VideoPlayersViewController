@@ -21,12 +21,74 @@ protocol PlayerProtocol {
     func seek(to time: TimeInterval, completionHandler: @escaping (Bool) -> Void)
 }
 
+class PlayerLayer: CALayer {
+    
+    // MARK: Fields
+    
+    private var playerLayer: AVPlayerLayer!
+    
+    // MARK: Initializer/Deinitializer
+    
+    override init() {
+        super.init()
+        
+        playerLayer = AVPlayerLayer()
+        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
+        addSublayer(playerLayer)
+    }
+    
+    override init(layer: Any) {
+        super.init(layer: layer)
+
+        if let layer = layer as? PlayerLayer {
+            playerLayer = layer.playerLayer
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
+        }
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+
+        playerLayer = AVPlayerLayer()
+        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
+        addSublayer(playerLayer)
+    }
+    
+    // MARK: Layer life cycle
+    
+    override func layoutSublayers() {
+        super.layoutSublayers()
+
+        // If the view is animating apply the animation to the sublayer
+        CATransaction.begin()
+        if let animation = self.animation(forKey: "position") {
+            CATransaction.setAnimationDuration(animation.duration)
+            CATransaction.setAnimationTimingFunction(animation.timingFunction)
+        } else {
+            CATransaction.disableActions()
+        }
+        if playerLayer.superlayer == self {
+            playerLayer.frame = bounds
+        }
+        CATransaction.commit()
+    }
+    
+    // MARK: Methods
+    
+    func addPlayer(_ player: AVPlayer) {
+        playerLayer.player = player
+    }
+    
+}
+
 class PlayerView: UIView, PlayerProtocol {
     
     // MARK: Fields
 
     private let player = AVPlayer(playerItem: nil)
-    private var playerLayer: AVPlayerLayer!
+    private var playerLayer: PlayerLayer {
+        return layer as! PlayerLayer
+    }
     private var observers = [NSKeyValueObservation?]()
     
     // MARK: Initializer/Deinitializer
@@ -53,10 +115,13 @@ class PlayerView: UIView, PlayerProtocol {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        playerLayer.frame = bounds
     }
     
+    // Override UIView property
+    override static var layerClass: AnyClass {
+        return PlayerLayer.self
+    }
+
     // MARK: PlayerProtocol
     
     weak var delegate: PlayerViewDelegate?
@@ -157,9 +222,7 @@ class PlayerView: UIView, PlayerProtocol {
     // MARK: Helpers
     
     private func initialize() {
-        playerLayer = AVPlayerLayer(player: player)
-        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspect
-        layer.addSublayer(playerLayer)
+        playerLayer.addPlayer(player)
     }
     
     private func stop() {

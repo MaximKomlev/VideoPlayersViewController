@@ -49,16 +49,14 @@ class PlayerWidgetViewControllerTransitioning: BaseViewControllerTransitioning, 
             destinationRect = CGRect(origin: playerCenter, size: destinationRect.size)
         }
         
-        UIView.animateKeyframes(withDuration: duration, delay: 0, options: [.calculationModeCubic, .layoutSubviews], animations: {
-            UIView.addKeyframe(withRelativeStartTime: 0.0, relativeDuration: 1) {
-                containerView.bounds.size = destinationRect.size
-                containerView.center = destinationRect.origin
-                if isRotationNeeded {
-                    let angel = containerView.window?.windowScene?.interfaceOrientation ?? .landscapeRight ==  .landscapeRight ?
-                        -CGFloat(Double.pi / 2) :
-                        CGFloat(Double.pi / 2)
-                    containerView.transform = CGAffineTransform(rotationAngle: angel)
-                }
+        UIView.animate(withDuration: duration, delay: 0, options: [.layoutSubviews], animations: {
+            containerView.bounds.size = destinationRect.size
+            containerView.center = destinationRect.origin
+            if isRotationNeeded {
+                let angel = containerView.window?.windowScene?.interfaceOrientation ?? .landscapeRight ==  .landscapeRight ?
+                    -CGFloat(Double.pi / 2) :
+                    CGFloat(Double.pi / 2)
+                containerView.transform = CGAffineTransform(rotationAngle: angel)
             }
         }) { (_) in
             containerView.layer.cornerRadius = 0
